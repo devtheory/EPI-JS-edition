@@ -1,0 +1,20 @@
+{
+  "name": "epi-javascript",
+  "version": "1.0.0",
+  "description": "A collection of JavaScript tests for questions in the Elements of Programming Interviews",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "keywords": [
+    "software",
+    "engineer",
+    "interview",
+    "questions"
+  ],
+  "author": "Jose Sanchez",
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine": "^3.5.0"
+  }
+}

@@ -104,7 +104,7 @@ describe("searching", () => {
     })
   })
 
-  describe("11.8  Find the kth largest element: ", () => {
+  describe("11.8: Find the kth largest element", () => {
     /*
     Problem:
 

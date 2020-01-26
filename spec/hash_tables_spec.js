@@ -179,7 +179,7 @@ describe("hash tables", () => {
     })
   })
 
-  describe("12.13: Test the Collatz conkecture", () => {
+  describe("12.13: Test the Collatz conjecture", () => {
     /*
     Problem:
 

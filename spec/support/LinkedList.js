@@ -34,6 +34,21 @@ class Node {
 
     return dummy.next;
   }
+
+  compareToOtherList(other){
+    let thisP = this;
+    let otherP = other;
+
+    while(thisP && otherP){
+      if(thisP.data != otherP.data) return false;
+      thisP = thisP.next;
+      otherP = otherP.next;
+    }
+
+    if(thisP || otherP) return false;
+    
+    return true;
+  }
 }
 
 export default class Node;

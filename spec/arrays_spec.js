@@ -5,11 +5,14 @@ describe("arrays", () => {
     that all elements less than the pivot come first, followed by all elements equal,
     followed by all elements greater.
 
-    Solution:
+    Solution: Using two pointers with an iterator. At each step, if i points to
+    a 0, swap it with the first pointer. Increase the iterator and the left pointer.
+    If it points to 1, just increment iterator. If pointing to 2, swap with last
+    iterator and only decrement the last pointer. Stop when iterator exceeds last pointer.
 
-    Patterns:
+    Patterns: two pointers
 
-    Complexity: Time: O(), Space: O()
+    Complexity: Time: O(n), Space: O(1)
     */
 
     var sortColors = function(arr) {

@@ -71,28 +71,59 @@ describe("arrays", () => {
     Problem: Given an arary encoding a non-negative number, add one to it and return the result as an integer.
     If given [1,2,9] return 130.
 
-    Solution:
+    Solution: Start from the back with a carry flag and run old school manual math algo.
+    when done, if carry left over, push a zero to the end and change arr[0] to a 1.
 
-    Patterns:
+    Patterns: Iterate from the back.
 
-    Complexity: Time: O(), Space: O()
+    Complexity: Time: O(n), Space: O(1)
     */
+
+    const addOneToEncodedArray = arr => {
+      let res = [];
+      if(!arr || arr.length === 0) return res;
+
+      let carry = true;
+
+      //start from the back
+      for(let i = arr.length-1 ; i >= 0 && carry ; i--){
+        //num != 9, add 1 to it and return
+        //num === 9
+          //no number to it's left
+          //number to its left is < 9, add one to it and return
+          //number to its left === 9 also
+        if(arr[i] < 9) return arr[i]++;
+
+        arr[i] = 0;
+
+
+      }
+      if(carry){
+        arr.push(0);
+        arr[0] = 1;
+      }
+    }
 
     it("takes an array of digits and returns the value of the numbers + 1", () => {
         let arr = [0];
-        expect(addOneToEncodedArray(arr)).toBe(1);
+        addOneToEncodedArray(arr)
+        expect(arr).toEqual([1]);
 
         arr = [9];
-        expect(addOneToEncodedArray(arr)).toBe(10);
+        addOneToEncodedArray(arr)
+        expect(arr).toEqual([1,0]);
 
-        arr = [29];
-        expect(addOneToEncodedArray(arr)).toBe(30);
+        arr = [2,9];
+        addOneToEncodedArray(arr)
+        expect(arr).toEqual([3,0]);
 
-        arr = [299];
-        expect(addOneToEncodedArray(arr)).toBe(300);
+        arr = [2,9,9];
+        addOneToEncodedArray(arr)
+        expect(arr).toEqual([3,0,0]);
 
-        arr = [2299];
-        expect(addOneToEncodedArray(arr)).toBe(2300);
+        arr = [2,2,9,9];
+        addOneToEncodedArray(arr)
+        expect(arr).toEqual([2,3,0,0]);
 
       })
   })
@@ -216,7 +247,7 @@ describe("arrays", () => {
     it("takes an array as argument and returns a new array where A's elements are arranged such that  B[0] <= B[1] >= B[2] <= B[3] >= B[4] <= B[5] >= ...", () => {
       let arr = [1,2,3,4,5,6]; // [1,3,2,5,4,6]
       let res = computeAlternation(arr);
-      expect(res)toEqual([1,3,2,5,4,6]);
+      expect(res).toEqual([1,3,2,5,4,6]);
     })
   })
 

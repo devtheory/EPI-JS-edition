@@ -12,23 +12,53 @@ describe("arrays", () => {
     Complexity: Time: O(), Space: O()
     */
 
-    it("it partitions elements around the pivot index", () => {
+    var sortColors = function(arr) {
+
+      if(!arr || arr.length <= 1) return arr;
+
+      let l = 0;
+      let r = arr.length-1;
+      let i = 0;
+
+      while(i <= r) {
+
+        if(arr[i] === 0){
+          swap(arr, i, l);
+          l++;
+          i++;
+        } else if(arr[i] === 2){
+          swap(arr, i, r);
+          r--;
+        } else {
+          i++;
+        }
+      }
+    };
+
+    const swap = (arr, i, j) => {
+      if(i === j) return;
+      const temp = arr[i];
+      arr[i] = arr[j];
+      arr[j] = temp;
+    }
+
+    it("takes an array of 0, 1, and 2s  and returns then partitioned in 0s, 1s, and 2s", () => {
         let arr = [2,4,1,3,3,2];
-        partitionAroundK(arr, 3);
+        sortColors(arr);
         expect(arr).toEqual([2,2,1,3,3,4]);
       })
 
       it("edge cases are ok", () => {
         let arr = [];
-        partitionAroundK(arr, 0);
+        sortColors(arr);
         expect(arr).toEqual([]);
 
         arr = [1];
-        partitionAroundK(arr, 0)
+        sortColors(arr);
         expect(arr).toEqual([1]);
 
         arr = [4,1];
-        partitionAroundK(arr, 0)
+        sortColors(arr);
         expect(arr).toEqual([1,4])
       })
   })

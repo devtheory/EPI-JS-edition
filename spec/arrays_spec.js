@@ -140,14 +140,58 @@ describe("arrays", () => {
 
     Complexity: Time: O(), Space: O()
     */
+    const multiplyEncodedArrays = (arr1, arr2) => {
+      //if one is null, return non null one
+      if(!arr1 || !arr2) return arr1 || arr2;
 
-      it("takes two arrays and returns the result of multiplying both in an array", () => {
-        let arr1 = [3,1,2];
-        let arr2 = [2,1,3];
-        let res = multiplyEncodedArrays(arr1, arr2);
-        expect(res).toEqual([6,6,4,5,6])
+      //if one is empty, return non empty one
+      if(arr1.length === 0 || arr2.length === 0) return arr1.length === 0 ? arr1 : arr2;
 
-      })
+      //get ref to shortest array
+      const shortest = arr1.length < arr2.length ? arr1 : arr2;
+      //get ref to longest array
+      const longest = arr1 == shortest ? arr2 : arr1;
+
+      //edge case where shortest is 1 element and happens to be 1
+      if(shortest.length === 1 && shortest[0] === 1) return longest;
+
+      let res = Array(shortest.length + longest.length).fill(0);
+      let i = shortest.length-1; //-1
+      let resIdx = res.length-1; //1
+      let carry = 0; //9
+
+      while(i >= 0){
+        const currentShort = shortest[i]; //9
+        let j = longest.length-1; //-1
+
+        while(j >= 0){
+          const currentLong = longest[j]; //9
+          res[resIdx] += (currentShort * currentLong) + carry;
+          carry = 0;
+
+          if(res[resIdx] > 9){
+            carry = Math.floor(res[resIdx] / 10);
+            res[resIdx] %= 10; //remove least significant nums
+          }
+          j--;
+          resIdx--;
+        }
+        i--;
+        resIdx++;
+      }
+      if(carry > 0){
+        res[0] = carry
+      }
+      return res;
+    }
+
+    // it("takes two arrays and returns the result of multiplying both in an array", () => {
+    //   let arr1 = [3,1,2];
+    //   let arr2 = [2,1,3];
+    //   let res = multiplyEncodedArrays(arr1, arr2);
+    //   expect(res).toEqual([6,6,4,5,6])
+    //
+    // })
   })
 
   describe("5.4: Advancing through an array", () => {
@@ -159,8 +203,37 @@ describe("arrays", () => {
 
     Patterns:
 
-    Complexity: Time: O(), Space: O()
+    Complexity: Time: O(n), Space: O(1)
     */
+
+    var canAdvanceThroughArray = function(nums) {
+      if(!nums || nums.length === 0 ) return false;
+      if(nums.length === 1) return true;
+
+      let i = 0;
+      let maxSoFar = 0;//2
+
+      while(i < nums.length && maxSoFar >= i){
+        //current pos is unreachable, return false *
+        //current pos takes me to goal, return true *
+        //current pos does not take me to goal
+        //arrived farther than before, meaning i > arr[i-1], so update
+        //arrived shy of farthest or equal, arr[i] = arr[i-1]
+
+        const stepsFromCurrent = nums[i]; // 3
+        const nextPos = i + stepsFromCurrent; //4
+
+        if(nextPos >= nums.length-1) return true;
+
+        if(nextPos > maxSoFar) maxSoFar = nextPos;
+
+        i++;
+      }
+
+      return false
+
+
+    };
 
     it("takes an array of numbers and returns true if one can move though the array", () => {
       let arr1 = [3,3,1,0,2,0,1];

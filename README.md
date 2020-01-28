@@ -1,9 +1,9 @@
 ## January 26
 
 - [x] 5.1: The dutch national flag problem
-- [ ] 5.2: Increment an arbitrary-precision integer
+- [x] 5.2: Increment an arbitrary-precision integer
 - [ ] 5.3: Multiply two arbitrary-precision integers
-- [ ] 5.4: Advancing through an array
+- [x] 5.4: Advancing through an array
 - [ ] 6.1: Interconvert strings and integers
 - [ ] 6.2: Base conversion
 - [ ] 6.3: Compute the spreadsheet column encoding

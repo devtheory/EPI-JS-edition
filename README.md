@@ -4,7 +4,7 @@
 - [x] 5.2: Increment an arbitrary-precision integer
 - [ ] 5.3: Multiply two arbitrary-precision integers
 - [x] 5.4: Advancing through an array
-- [ ] 6.1: Interconvert strings and integers
+- [x] 6.1: Interconvert strings and integers
 - [ ] 6.2: Base conversion
 - [ ] 6.3: Compute the spreadsheet column encoding
 

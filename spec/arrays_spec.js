@@ -5,30 +5,63 @@ describe("arrays", () => {
     that all elements less than the pivot come first, followed by all elements equal,
     followed by all elements greater.
 
-    Solution:
+    Solution: Using two pointers with an iterator. At each step, if i points to
+    a 0, swap it with the first pointer. Increase the iterator and the left pointer.
+    If it points to 1, just increment iterator. If pointing to 2, swap with last
+    iterator and only decrement the last pointer. Stop when iterator exceeds last pointer.
 
-    Patterns:
+    Patterns: two pointers
 
-    Complexity: Time: O(), Space: O()
+    Complexity: Time: O(n), Space: O(1)
     */
 
-    it("it partitions elements around the pivot index", () => {
+    var sortColors = function(arr) {
+
+      if(!arr || arr.length <= 1) return arr;
+
+      let l = 0;
+      let r = arr.length-1;
+      let i = 0;
+
+      while(i <= r) {
+
+        if(arr[i] === 0){
+          swap(arr, i, l);
+          l++;
+          i++;
+        } else if(arr[i] === 2){
+          swap(arr, i, r);
+          r--;
+        } else {
+          i++;
+        }
+      }
+    };
+
+    const swap = (arr, i, j) => {
+      if(i === j) return;
+      const temp = arr[i];
+      arr[i] = arr[j];
+      arr[j] = temp;
+    }
+
+    it("takes an array of 0, 1, and 2s  and returns then partitioned in 0s, 1s, and 2s", () => {
         let arr = [2,4,1,3,3,2];
-        partitionAroundK(arr, 3);
+        sortColors(arr);
         expect(arr).toEqual([2,2,1,3,3,4]);
       })
 
       it("edge cases are ok", () => {
         let arr = [];
-        partitionAroundK(arr, 0);
+        sortColors(arr);
         expect(arr).toEqual([]);
 
         arr = [1];
-        partitionAroundK(arr, 0)
+        sortColors(arr);
         expect(arr).toEqual([1]);
 
         arr = [4,1];
-        partitionAroundK(arr, 0)
+        sortColors(arr);
         expect(arr).toEqual([1,4])
       })
   })
@@ -38,28 +71,59 @@ describe("arrays", () => {
     Problem: Given an arary encoding a non-negative number, add one to it and return the result as an integer.
     If given [1,2,9] return 130.
 
-    Solution:
+    Solution: Start from the back with a carry flag and run old school manual math algo.
+    when done, if carry left over, push a zero to the end and change arr[0] to a 1.
 
-    Patterns:
+    Patterns: Iterate from the back.
 
-    Complexity: Time: O(), Space: O()
+    Complexity: Time: O(n), Space: O(1)
     */
+
+    const addOneToEncodedArray = arr => {
+      let res = [];
+      if(!arr || arr.length === 0) return res;
+
+      let carry = true;
+
+      //start from the back
+      for(let i = arr.length-1 ; i >= 0 && carry ; i--){
+        //num != 9, add 1 to it and return
+        //num === 9
+          //no number to it's left
+          //number to its left is < 9, add one to it and return
+          //number to its left === 9 also
+        if(arr[i] < 9) return arr[i]++;
+
+        arr[i] = 0;
+
+
+      }
+      if(carry){
+        arr.push(0);
+        arr[0] = 1;
+      }
+    }
 
     it("takes an array of digits and returns the value of the numbers + 1", () => {
         let arr = [0];
-        expect(addOneToEncodedArray(arr)).toBe(1);
+        addOneToEncodedArray(arr)
+        expect(arr).toEqual([1]);
 
         arr = [9];
-        expect(addOneToEncodedArray(arr)).toBe(10);
+        addOneToEncodedArray(arr)
+        expect(arr).toEqual([1,0]);
 
-        arr = [29];
-        expect(addOneToEncodedArray(arr)).toBe(30);
+        arr = [2,9];
+        addOneToEncodedArray(arr)
+        expect(arr).toEqual([3,0]);
 
-        arr = [299];
-        expect(addOneToEncodedArray(arr)).toBe(300);
+        arr = [2,9,9];
+        addOneToEncodedArray(arr)
+        expect(arr).toEqual([3,0,0]);
 
-        arr = [2299];
-        expect(addOneToEncodedArray(arr)).toBe(2300);
+        arr = [2,2,9,9];
+        addOneToEncodedArray(arr)
+        expect(arr).toEqual([2,3,0,0]);
 
       })
   })
@@ -76,14 +140,58 @@ describe("arrays", () => {
 
     Complexity: Time: O(), Space: O()
     */
+    const multiplyEncodedArrays = (arr1, arr2) => {
+      //if one is null, return non null one
+      if(!arr1 || !arr2) return arr1 || arr2;
 
-      it("takes two arrays and returns the result of multiplying both in an array", () => {
-        let arr1 = [3,1,2];
-        let arr2 = [2,1,3];
-        let res = multiplyEncodedArrays(arr1, arr2);
-        expect(res).toEqual([6,6,4,5,6])
+      //if one is empty, return non empty one
+      if(arr1.length === 0 || arr2.length === 0) return arr1.length === 0 ? arr1 : arr2;
 
-      })
+      //get ref to shortest array
+      const shortest = arr1.length < arr2.length ? arr1 : arr2;
+      //get ref to longest array
+      const longest = arr1 == shortest ? arr2 : arr1;
+
+      //edge case where shortest is 1 element and happens to be 1
+      if(shortest.length === 1 && shortest[0] === 1) return longest;
+
+      let res = Array(shortest.length + longest.length).fill(0);
+      let i = shortest.length-1; //-1
+      let resIdx = res.length-1; //1
+      let carry = 0; //9
+
+      while(i >= 0){
+        const currentShort = shortest[i]; //9
+        let j = longest.length-1; //-1
+
+        while(j >= 0){
+          const currentLong = longest[j]; //9
+          res[resIdx] += (currentShort * currentLong) + carry;
+          carry = 0;
+
+          if(res[resIdx] > 9){
+            carry = Math.floor(res[resIdx] / 10);
+            res[resIdx] %= 10; //remove least significant nums
+          }
+          j--;
+          resIdx--;
+        }
+        i--;
+        resIdx++;
+      }
+      if(carry > 0){
+        res[0] = carry
+      }
+      return res;
+    }
+
+    // it("takes two arrays and returns the result of multiplying both in an array", () => {
+    //   let arr1 = [3,1,2];
+    //   let arr2 = [2,1,3];
+    //   let res = multiplyEncodedArrays(arr1, arr2);
+    //   expect(res).toEqual([6,6,4,5,6])
+    //
+    // })
   })
 
   describe("5.4: Advancing through an array", () => {
@@ -95,8 +203,37 @@ describe("arrays", () => {
 
     Patterns:
 
-    Complexity: Time: O(), Space: O()
+    Complexity: Time: O(n), Space: O(1)
     */
+
+    var canAdvanceThroughArray = function(nums) {
+      if(!nums || nums.length === 0 ) return false;
+      if(nums.length === 1) return true;
+
+      let i = 0;
+      let maxSoFar = 0;//2
+
+      while(i < nums.length && maxSoFar >= i){
+        //current pos is unreachable, return false *
+        //current pos takes me to goal, return true *
+        //current pos does not take me to goal
+        //arrived farther than before, meaning i > arr[i-1], so update
+        //arrived shy of farthest or equal, arr[i] = arr[i-1]
+
+        const stepsFromCurrent = nums[i]; // 3
+        const nextPos = i + stepsFromCurrent; //4
+
+        if(nextPos >= nums.length-1) return true;
+
+        if(nextPos > maxSoFar) maxSoFar = nextPos;
+
+        i++;
+      }
+
+      return false
+
+
+    };
 
     it("takes an array of numbers and returns true if one can move though the array", () => {
       let arr1 = [3,3,1,0,2,0,1];
@@ -183,7 +320,7 @@ describe("arrays", () => {
     it("takes an array as argument and returns a new array where A's elements are arranged such that  B[0] <= B[1] >= B[2] <= B[3] >= B[4] <= B[5] >= ...", () => {
       let arr = [1,2,3,4,5,6]; // [1,3,2,5,4,6]
       let res = computeAlternation(arr);
-      expect(res)toEqual([1,3,2,5,4,6]);
+      expect(res).toEqual([1,3,2,5,4,6]);
     })
   })
 

@@ -10,6 +10,61 @@ describe("strings", () => {
 
     Complexity: Time: O(), Space: O()
     */
+    var myAtoi = function(str) {
+      let res = 0;
+      if(!str || str.length === 0) return res;
+      let space = " ";
+      for(let i = 0 ; i < str.length ; i++){
+        if(str[i] == space) continue;
+        if(!isSignOrInt(str[i])) return res;
+        return convertOrFail(str, i, res);
+      }
+      return res;
+    };
+
+    const isSignOrInt = char => {
+      if(isNum(char) || char == "-" || char == "+") return true;
+      return false;
+    }
+
+    const isNum = char => {
+      if(char >= '0' && char <= "9") return true;
+      return false;
+    }
+
+    const convertOrFail = (str, i, res) => {
+      const neg = '-';
+      const pos = '+';
+      const space = ' ';
+      const MAX = Math.pow(2, 31)-1;
+      const MIN = Math.pow(-2, 31);
+      const sign = str[i] == neg ? -1 : 1;
+
+      if(str[i] == neg || str[i] == pos) i++;
+      if(str[i] == space || !isNum(str[i])) return res;
+
+      while(str[i] == space && i < str.length) i++;
+
+      if(i > str.length-1) return res;
+
+      let strNum = "";
+      while(i < str.length){
+
+        if(isNum(str[i])){
+          strNum += str[i];
+        } else {
+          let num = parseInt(strNum) * sign;
+          if(num < MIN) return MIN;
+          if(num > MAX) return MAX;
+          return num;
+        }
+        i++;
+      }
+      let num = parseInt(strNum) * sign;
+      if(num < MIN) return MIN;
+      if(num > MAX) return MAX;
+      return num;
+    }
     it("returns the integer representation of a string passed in", () => {
       //test strToNum
       let str = "123";

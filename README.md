@@ -6,7 +6,7 @@
 - [x] 5.4: Advancing through an array
 - [x] 6.1: Interconvert strings and integers
 - [ ] 6.2: Base conversion
-- [ ] 6.3: Compute the spreadsheet column encoding
+- [x] 6.3: Compute the spreadsheet column encoding
 
 ## January 27
 

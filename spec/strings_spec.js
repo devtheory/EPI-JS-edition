@@ -92,6 +92,31 @@ describe("strings", () => {
 
     Complexity: Time: O(), Space: O()
     */
+//missing the case where converting to or from bases higher than 10
+    const baseConvert = (str, b1, b2) => {
+      if(b1 === b2) return str;
+
+      if(b1 < b2) {
+        let res = 0;
+        let power = 0;
+        for(let i = str.length-1 ; i >= 0 ; i--){
+          res += str[i] * (Math.pow(b1, power));
+          power++;
+        }
+        return res.toString();
+      }
+
+      let quotient = parseInt(str);
+      let res = [];
+
+      while(quotient > 0){
+        let rem = quotient % b2;
+        res.push(rem.toString());
+        quotient = Math.floor(quotient / b2);
+      }
+
+      return res.reverse().join("");
+    }
     it("takes a string, an integer b1, and another integer b2. String represents int in b1. Function returns string in base b2.", () => {
       //assume 2 <= b1, b2 <= 16. A=10, B=11...F=15
       const str = "615";

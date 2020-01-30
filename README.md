@@ -13,7 +13,7 @@
 - [ ] 6.4: Replace and remove
 - [x] 7.1: Merge two sorted lists
 - [x] 7.2: Reverse a single sublist
-- [ ] 7.3: Test for cyclicity
+- [x] 7.3: Test for cyclicity
 - [ ] 7.4: Test for overlapping lists-lists are cycle-free
 - [ ] 8.1: Implement a stack with max API
 - [ ] 8.2: Evaluate RPN expressions

@@ -89,6 +89,49 @@ describe("linked lists", () => {
 
     Complexity: Time: O(), Space: O()
     */
+
+    var detectCycle = function(head) {
+      if(!head) return head;
+
+      let slow = head;
+      let fast = slow.next ? slow.next.next : null;
+
+      while(fast){
+        if(slow == fast){
+          //get cycle length
+          let cycleLength = 0;
+          do {
+            cycleLength++;
+            fast = fast.next
+          }
+          while(slow != fast);
+
+          let cycleLengthIter = head;
+
+          while(cycleLength-- > 0){
+            cycleLengthIter = cycleLengthIter.next;
+          }
+
+          let iter = head;
+
+          while(iter != cycleLengthIter){
+            iter = iter.next;
+            cycleLengthIter = cycleLengthIter.next;
+          }
+          return iter;
+
+        } else {
+          slow = slow.next;
+          if(slow != fast){
+            fast = fast.next;
+            if(!fast) return null;
+            fast = fast.next;
+          }
+        }
+      }
+      if(head.next == head) return head;
+      return null
+    };
     it("takes the head of a singly linked list and returns null if there does not exist a cycle, and the node at the start of the cycle if one is present", () => {
       let l1 = LinkedList.buildList([1,2,3,4]);
       expect(getCycleStartIfExists(l1)).toBeNull();

@@ -86,7 +86,11 @@ describe("strings", () => {
     an integer b1, and another integer b2. The string represents and integer in b1.
     Output should be the string representing the integer in base b2.
 
-    Solution:
+    Solution: Figure out if converting from higher base to lower base and if so
+    continuously divide the quotient (int representation of str) by desired base
+    until it is 0. At each step, the remainder will be the next value to append to the
+    result (which will be reversed). If going from lower base to higher, multiply each
+    number coming from the back by the result of raising its base to its position.
 
     Patterns:
 
@@ -164,6 +168,39 @@ describe("strings", () => {
 
     Complexity: Time: O(), Space: O()
     */
+//buggy solution. will revisit later
+    const replaceAndRemove = (arr, size) => {
+      const freq = getAandBFreq(arr);
+      let r = size + (freq.a - freq.b);
+      let i = size-1;
+      let a = "a", b = "b", d = "d";
+
+      while(i >= 0){
+        if(arr[i] != b){
+          if(arr[i] == a){
+            arr[r] = d;
+            r--;
+            arr[r] = d;
+            r--;
+          } else {
+            arr[r] = arr[i];
+          }
+        }
+        i--;
+      }
+
+    }
+
+    const getAandBFreq = arr => {
+      let res = {a: 0, b: 0};
+      let a = "a", b = "b";
+      arr.forEach(el => {
+        if(el == a) res[a]++;
+        if(el == b) res[b]++;
+      })
+      return res;
+    }
+
     it("takes an array and size integer representing number of elements in array to work with and replaces all 'a's with two 'd's and removes all 'b's.", () => {
       let arr = ['a','c','d', 'b', 'b', 'c', 'a'];
       expect(convertArray(arr, 7)).toEqual(['d','d','c','d','c','d','d'])

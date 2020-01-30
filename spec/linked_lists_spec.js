@@ -9,8 +9,30 @@ describe("linked lists", () => {
 
     Patterns:
 
-    Complexity: Time: O(), Space: O()
+    Complexity: Time: O(n+m), Space: O()
     */
+    var mergeTwoLists = function(l1, l2) {
+      if(!l1) return l2;
+      if(!l2) return l1;
+
+      let dummy = new ListNode(null),
+      l1p = l1,
+      l2p = l2,
+      tail = dummy;
+
+      while(l1p && l2p){
+        if(l1p.val < l2p.val){
+          tail.next = l1p;
+          l1p = l1p.next;
+        } else {
+          tail.next = l2p
+          l2p = l2p.next;
+        }
+        tail = tail.next;
+      }
+      tail.next = l1p ? l1p : l2p
+      return dummy.next;
+    };
     it("Write a program that takes two sorted lists and returns their merge in place.", () => {
       let l1 = LinkedList.buildList([2,5,7]);
       let l2 = LinkedList.buildList([3,11]);

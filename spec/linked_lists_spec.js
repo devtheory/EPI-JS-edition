@@ -55,6 +55,20 @@ describe("linked lists", () => {
 
     Complexity: Time: O(), Space: O()
     */
+    //reverses full list, trivial to modify to meet the requirements here.
+    var reverseList = function(head) {
+      if(!head) return head;
+
+      let prev = null,
+      current = head;
+      while(current){
+        const temp = current.next;
+        current.next = prev;
+        prev = current;
+        current = temp;
+      }
+      return prev;
+    };
     it("Write a program which takes a singly linked list L and two integers S and F as arguments and returns the reversed order of the nodes from the Sth node to the Fth node, inclusive", () => {
       let l1 = LinkedList.buildList([11,3,5,7,2]);
       reverseSublist(l1, 1, 3);  // [11,7,5,3,2] should be new state

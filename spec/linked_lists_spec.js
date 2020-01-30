@@ -152,6 +152,52 @@ describe("linked lists", () => {
 
     Complexity: Time: O(), Space: O()
     */
+    var getIntersectionNode = function(l1, l2) {
+      if(!l1 || !l2) return null;
+      if(l1 == l2) return l1;
+
+      const lenAndTail1 = getLengthAndTail(l1);
+      const lenAndTail2 = getLengthAndTail(l2);
+
+      if(lenAndTail1.tail != lenAndTail2.tail) return null;
+
+      let l1p = l1, l2p = l2;
+
+      if(lenAndTail1.len > lenAndTail2.len){
+        let steps = lenAndTail1.len - lenAndTail2.len;
+        while(steps > 0){
+          l1p = l1p.next;
+          steps--;
+        }
+      } else{
+        let steps = lenAndTail2.len - lenAndTail1.len;
+        while(steps > 0){
+          l2p = l2p.next;
+          steps--;
+        }
+      }
+
+      //short list
+      if(l1p == l2p) return l1p;
+
+      while(l1p.next != l2p.next ){
+        l1p = l1p.next;
+        l2p = l2p.next;
+        if(!l1p || !l2p) return null;
+      }
+      return l1p.next || l2p.next;
+    };
+
+    const getLengthAndTail = list => {
+      let len = 1;
+      let tail = list;
+      while(tail.next){
+        len++;
+        tail = tail.next;
+      }
+
+      return {len, tail};
+    }
     it("takes two cycle-free singly linked lists and determines if there exists a node that is common to both lists. Return common node or null", () => {
       let l1 = LinkedList.buildList([1,2]);
       let l2 = LinkedList.buildList([3,5,6]);

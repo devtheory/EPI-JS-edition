@@ -14,7 +14,7 @@
 - [x] 7.1: Merge two sorted lists
 - [x] 7.2: Reverse a single sublist
 - [x] 7.3: Test for cyclicity
-- [ ] 7.4: Test for overlapping lists-lists are cycle-free
+- [x] 7.4: Test for overlapping lists-lists are cycle-free
 - [ ] 8.1: Implement a stack with max API
 - [ ] 8.2: Evaluate RPN expressions
 

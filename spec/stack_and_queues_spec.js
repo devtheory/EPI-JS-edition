@@ -14,6 +14,83 @@ describe("stacks and queues", () => {
 
     Complexity: Time: O(), Space: O()
     */
+
+    class ItemWithMin {
+      constructor(item, count){
+        this.item = item;
+        this.count = count;
+      }
+    }
+
+    class Node {
+      constructor(data){
+        this.data = data;
+        this.next = null
+      }
+    }
+
+    class MinStack {
+      constructor(){
+        this.head = null;
+        this.freq = null;
+      }
+
+      top(){
+        if(!this.head) return null;
+        return this.head.data;
+      }
+
+      getMin(){
+        if(!this.head) return null;
+        return this.freq.data.item;
+      }
+
+      push(data){
+        let temp = new Node(data);
+        if(!this.head){
+          //empty stack
+          //set head to a new node with data
+          //set freq to a new node with new ItemWithMin obj
+          this.head = temp;
+          this.freq = new Node(new ItemWithMin(data, 1));
+        } else {
+          //stack not empty
+          //create a new node with data
+          //grab reference to head
+          //make new node point to reference
+          //set head to new node
+          let oldHead = this.head;
+          temp.next = oldHead;
+          this.head = temp;
+
+          if(this.head.data < this.freq.data.item){
+            //newly inserted node is new min
+            let newItem = new Node(new ItemWithMin(data, 1));
+            let oldFreq = this.freq;
+            newItem.next = oldFreq;
+            this.freq = newItem;
+          } else { //newly inserted node is like min or greater
+            //peek freq and increase count of ItemWithMin
+            this.freq.data.count++;
+          }
+        }
+      }
+
+      pop(){
+        if(!this.head) return null;
+
+        let removed = this.head;
+        this.head = this.head.next;
+
+        //removed the last current min
+        this.freq.data.count--;
+        if(this.freq.data.count <= 0){
+          this.freq = this.freq.next;
+        }
+
+        return removed;
+      }
+    }
     it("returns the max value in a stack", () => {
       let stack = Stack.buildStack([1,5,4])
 

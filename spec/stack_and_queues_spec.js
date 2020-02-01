@@ -12,83 +12,51 @@ describe("stacks and queues", () => {
 
     Patterns:
 
-    Complexity: Time: O(), Space: O()
+    Complexity: Time: push, pop, getMin O(1), Space: in addition to space for stack O(unique smallest)
     */
-
-    class ItemWithMin {
-      constructor(item, count){
-        this.item = item;
-        this.count = count;
-      }
-    }
-
-    class Node {
-      constructor(data){
-        this.data = data;
-        this.next = null
-      }
-    }
-
+    //Does min stack instead
     class MinStack {
       constructor(){
-        this.head = null;
-        this.freq = null;
+        this.stack = [];
+        this.frequency = [];
       }
 
       top(){
-        if(!this.head) return null;
-        return this.head.data;
+        if(this.stack.length === 0) return null;
+        return this.stack[this.stack.length-1];
       }
 
       getMin(){
-        if(!this.head) return null;
-        return this.freq.data.item;
+        if(this.frequency.length === 0) return null;
+        return this.frequency[this.frequency.length-1].data;
       }
 
       push(data){
-        let temp = new Node(data);
-        if(!this.head){
-          //empty stack
-          //set head to a new node with data
-          //set freq to a new node with new ItemWithMin obj
-          this.head = temp;
-          this.freq = new Node(new ItemWithMin(data, 1));
-        } else {
-          //stack not empty
-          //create a new node with data
-          //grab reference to head
-          //make new node point to reference
-          //set head to new node
-          let oldHead = this.head;
-          temp.next = oldHead;
-          this.head = temp;
-
-          if(this.head.data < this.freq.data.item){
-            //newly inserted node is new min
-            let newItem = new Node(new ItemWithMin(data, 1));
-            let oldFreq = this.freq;
-            newItem.next = oldFreq;
-            this.freq = newItem;
-          } else { //newly inserted node is like min or greater
-            //peek freq and increase count of ItemWithMin
-            this.freq.data.count++;
-          }
+        if(this.frequency.length === 0 | data < this.getMin()){
+          //first element or new min
+          this.frequency.push(new DataWithMin(data, 1));
+        } else { //not new min and not empty stack, so increase last min count
+          this.frequency[this.frequency.length-1].count++;
         }
+
+        this.stack.push(data);
       }
 
       pop(){
-        if(!this.head) return null;
+        if(this.stack.length === 0) return null;
 
-        let removed = this.head;
-        this.head = this.head.next;
+        const frequencyTop = this.frequency[this.frequency.length-1];
+        frequencyTop.count--;
+        if(frequencyTop.count == 0) this.frequency.pop();
 
-        //removed the last current min
-        this.freq.data.count--;
-        if(this.freq.data.count <= 0){
-          this.freq = this.freq.next;
-        }
+        return this.stack.pop();
+      }
+    }
 
-        return removed;
+    class DataWithMin {
+      constructor(data, count){
+        this.data = data;
+        this.count = count;
       }
     }
     it("returns the max value in a stack", () => {
@@ -164,6 +132,31 @@ describe("stacks and queues", () => {
 
     Complexity: Time: O(), Space: O()
     */
+
+    var isValid = function(s) {
+      if(!s || s.length === 0) return true;
+
+      let stack = [];
+      let openParen = "(", closingParen = ")",
+      openBracket = "[", closingBracket = "]",
+      openCurly = "{", closingCurly = "}";
+
+      for(let i = 0 ; i < s.length ; i++ ){
+        const char = s[i];
+        if(char == openParen || char == openBracket || char == openCurly){
+          stack.push(char);
+        } else {
+          let top = stack.pop();
+          if(!top) return false;
+
+          if((char == closingParen && top != openParen) ||
+          (char == closingBracket && top != openBracket) ||
+          (char == closingCurly && top != openCurly)
+        ) return false;
+      }
+    }
+    return stack.length === 0;
+  };
     it("takes a string containing parens, curly and square brackets and returns true if well formed.", () => {
       const str1 = "([]){()}"; //t
       const str2 = "[()[]{()()}]"; //t

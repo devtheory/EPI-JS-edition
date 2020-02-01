@@ -16,11 +16,11 @@
 - [x] 7.3: Test for cyclicity
 - [x] 7.4: Test for overlapping lists-lists are cycle-free
 - [x] 8.1: Implement a stack with max API
-- [ ] 8.2: Evaluate RPN expressions
+- [x] 8.2: Evaluate RPN expressions
 
 ## January 28
 
-- [ ] 8.3: Test a string over '{,},(,),[,]' for well-formedness
+- [x] 8.3: Test a string over '{,},(,),[,]' for well-formedness
 - [ ] 8.4: Normalize pathnames
 - [ ] 9.1: Test if a binary tree is height balanced
 - [ ] 9.2: Test if a binary tree is symmetric

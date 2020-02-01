@@ -9,12 +9,44 @@ describe("binary trees", () => {
     true if the tree is height balanced. A tree is height balanced if for each node in the tree,
     the difference between the height of its left and right subtrees is no more than 1.
 
-    Solution:
+    Solution: Use a helper method which returns a Visitor obj with info needed. Do
+    postorder traversal, checking balance status after coming back from left subtree.
+    if Not balanced, don't explore the right one and return the left subtree. Same
+    for the right subtree. Then check if the tree is balanced by Math flooring
+    left - right subtree heights and checking the diff is <= 1. Then get the max
+    height betweeon both subtrees and add one to it and create a new Visitor with it
+    to be returned.
 
-    Patterns:
+    Patterns: Post order traversal with Visitor objects tracking height and balance status
 
-    Complexity: Time: O(), Space: O()
+    Complexity: Time: O(n), Space: O(n)
     */
+    const isBalanced = root => {
+      if(root === null) return true;
+
+      return isBalancedHelper(root).balanced;
+    }
+
+    const isBalancedHelper = root => {
+      if(root === null) return new Visitor(true, -1);
+
+      const l = isBalancedHelper(root.left);
+      if(!l.balanced) return l;
+      const r = isBalancedHelper(root.right);
+      if(!r.balanced) return r;
+
+      const isBalanced = Math.abs(l.height - r.height) <= 1;
+      const height = Math.max(l.height, r.height) + 1;
+      return new Visitor(isBalanced, height);
+
+    }
+
+    class Visitor {
+      constructor(balanced, height){
+        this.balanced = balanced;
+        this.height = height;
+      }
+    }
     it("takes as input the root of a binary tree and return true if the tree is height balanced", () => {
       //       a
       //     b    f

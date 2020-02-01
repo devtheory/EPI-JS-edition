@@ -110,12 +110,43 @@ describe("stacks and queues", () => {
     Problem: Write a program that takes an arithmetical expression in RPN and returns
     the number that the expression evaluates to.
 
-    Solution:
+    Solution: Expressions are applied to every two operands, so use a stack to push
+    all numbers from left to right. when an operator is found, we pop the last two
+    elements from the stack and apply the operand on them and push the result into
+    the stack.
 
     Patterns:
 
-    Complexity: Time: O(), Space: O()
+    Complexity: Time: O(n), Space: O(num of unique mins)
     */
+    var evalRPN = function(tokens) {
+      // let stack = new Stack();
+      let stack = [];
+      let a,b;
+      let plus = "+", minus = "-", times = "*", divide = "/";
+
+      tokens.forEach(char => {
+        switch(char){
+          case plus:
+          stack.push(stack.pop() + stack.pop());
+          break;
+          case minus:
+          b = stack.pop(), a = stack.pop();
+          stack.push(a - b);
+          break;
+          case times:
+          stack.push(stack.pop() * stack.pop());
+          break;
+          case divide:
+          b = stack.pop(), a = stack.pop();
+          stack.push(Math.floor(a / b | 0));//truncate
+          break;
+          default:
+          stack.push(parseInt(char));
+        }
+      })
+      return stack.pop();
+    };
     it("takes an arithmetical expression in RPN and returns the number that the expression evaluates to", () => {
       let expr = "3,4,+,2,x,1,+"; //reads like (3+4) x 2 + 1
       expect(evaluateRPN(expr)).toBe(15);

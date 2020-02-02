@@ -19,7 +19,7 @@ describe("binary trees", () => {
 
     Patterns: Post order traversal with Visitor objects tracking height and balance status
 
-    Complexity: Time: O(n), Space: O(n)
+    Complexity: Time: O(n), Space: O(h) for the stack but should consider the visitor usage
     */
     const isBalanced = root => {
       if(root === null) return true;
@@ -70,12 +70,36 @@ describe("binary trees", () => {
     Problem: Write a program that checks if a binary tree is symmetric. Symmetry means the
     left subtree is the mirror image of the right subtree (including values)
 
-    Solution:
+    Solution: add left and right subtrees to a stack then loop while there are elements
+    in the stack. each step, remove two nodes, if they're both null (leaf), return
+    true since it's balanced. if one of them is null but the other one isn't returh false.
+    If one nodes left doesn't match the other's right, return false (not mirror).
+    add oposing grandchildren to stack.
 
-    Patterns:
+    Patterns: Stack for iterative solution
 
-    Complexity: Time: O(), Space: O()
+    Complexity: Time: O(n), Space: O(h)
     */
+
+    var isSymmetric = function(root) {
+      if(!root) return true;
+
+      let s = [];
+      s.push(root.left);
+      s.push(root.right);
+
+      while(s.length > 0){
+        const n1 = s.pop(), n2 = s.pop();
+        if(!n1 && !n2) continue;
+
+        if(!n1 || !n2 || n1.val != n2.val) return false;
+        s.push(n1.left);
+        s.push(n2.right);
+        s.push(n2.left);
+        s.push(n1.right);
+      }
+      return true;
+    };
     it("takes the root of a tree and returns true if the left subtree is the mirror image of the right subtree (tree is symmetric)", () => {
       const root = new BSTNode(314);
       root.left = new BSTNode(6);

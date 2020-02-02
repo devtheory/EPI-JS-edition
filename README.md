@@ -23,7 +23,7 @@
 - [x] 8.3: Test a string over '{,},(,),[,]' for well-formedness
 - [ ] 8.4: Normalize pathnames
 - [x] 9.1: Test if a binary tree is height balanced
-- [ ] 9.2: Test if a binary tree is symmetric
+- [x] 9.2: Test if a binary tree is symmetric
 - [ ] 9.3: Compute the lowest common ancestor in a binary tree
 - [ ] 9.4: Compute the LCA when nodes have parent pointers
 - [ ] 10.1: Merge sorted files

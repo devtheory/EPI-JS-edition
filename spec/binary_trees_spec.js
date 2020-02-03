@@ -122,7 +122,7 @@ describe("binary trees", () => {
     Problem: Design an algo for computing the LCA of two nodes in a binary tree which nodes
     do not have a parent tree.
 
-    Solution: 
+    Solution:
 
     Patterns:
 
@@ -170,12 +170,51 @@ describe("binary trees", () => {
     Problem: Given two nodes in a binary tree, design an algo that computes the LCA.
     Each node has a pointer to their parent.
 
-    Solution:
+    Solution: walk both nodes to the root and count the number of levels traversed.
+    then move the deepest node to the same level. If they're pointing to the same node, they're the LCA.
+    otherwise, traverse towards the root until their parents match and return the parent.
 
     Patterns:
 
-    Complexity: Time: O(), Space: O()
+    Complexity: Time: O(h), Space: O(h)
     */
+    //untested bro but we getting short on time TICK TOCL MOTHErFUCLERs!
+    const getLCAThroughParent = (n1,n2) => {
+        if(n1 == n2) return n1;
+        let lens = getDepths(n1, n2);
+        let {deepest, dCount} = lens.deepest;
+        let {shallowest, sCount} = lens.shallowest;
+
+        while(dCount > sCount){
+          deepest = deepest.parent;
+          dCount--;
+        }
+
+        while(deepest && shallowest){
+          if(deepest == shallowest) return deepest;
+          if(deepest.parent == shallowest.parent) return deepest.parent;
+          deepest = deepest.parent;
+          shallowest = shallowest.parent;
+        }
+
+        return false;
+    }
+
+    const getDepths = (n1, n2) => {
+      let lens = {};
+      let n1Count, n2Count = 0;
+
+      while(n1 || n2){
+        if(n1) (n1Count++, n1 = n1.parent);
+        if(n2) (n2Count++, n2 = n2.parent;
+      }
+
+      n1Count > n2Count
+        ? (lens.deepest = {deepest: n1, dCount: n1Count}, lens.shallowest = {shallowest: n2, sCount: n2Count})
+        : (lens.shallowest = {shallowest: n1, sCount: n1Count}, lens.deepest = {deepest: n2, DCount: n2Count})
+      return lens;
+    }
+
     it("takes two binary tree nodes with parent pointers and returns their LCA", () => {
       const root = new BTNodeWithParent("a", null);
       const b = new BTNodeWithParent("b", root);

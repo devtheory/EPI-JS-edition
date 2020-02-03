@@ -3,12 +3,54 @@ describe("binary search trees", () => {
     /*
     Problem:
 
-    Solution:
+    Solution: Do an inorder traversal while checking that the prev node is not
+    greater than or equal to the current node.
 
     Patterns:
 
-    Complexity: Time: O(), Space: O()
+    Complexity: Time: O(n), Space: O(h)
     */
+    //recursive solution
+    var isValidBST = function(root) {
+      if(!root) return true;
+      let res = [];
+      isValidBSTHelper(root, res);
+      return isOrdered(res);
+    };
+
+    const isValidBSTHelper = (root, res) => {
+      if(!root) return root;
+
+      isValidBSTHelper(root.left, res);
+      res.push(root.val);
+      isValidBSTHelper(root.right, res)
+    }
+
+    const isOrdered = arr => {
+      for(let i = 0 ; i < arr.length ; i++){
+        if(arr[i-1] >= arr[i]) return false;
+      }
+      return true;
+    }
+
+    //iterative solution
+    const isValidBST = root => {
+      if(!root) return true;
+      let stack = [];
+      let pre = null;
+
+      while(root != null || stack.length != 0){
+        while(root != null){
+          stack.push(root);
+          root = root.left;
+        }
+        root = stack.pop();
+        if(pre != null && pre.val >= root.val) return false;
+        pre = root;
+        root = root.right;
+      }
+      return true;
+    }
     it("", () => {
       expect()
     })

@@ -122,12 +122,27 @@ describe("binary trees", () => {
     Problem: Design an algo for computing the LCA of two nodes in a binary tree which nodes
     do not have a parent tree.
 
-    Solution:
+    Solution: 
 
     Patterns:
 
-    Complexity: Time: O(), Space: O()
+    Complexity: Time: O(n), Space: O(h)
     */
+
+    var lowestCommonAncestor = function(root, p, q) {
+      if(!root || root == p || root == q) return root;
+
+      const l = lowestCommonAncestor(root.left, p, q);
+      const r = lowestCommonAncestor(root.right, p, q);
+
+      if(l && r) return root;
+      if(l){
+        return l;
+      } else if(r){
+        return r;
+      }
+      return null;
+    };
     it("takes two nodes from a binary tree and returns the LCA of the two nodes.", () => {
       //       a
       //     b    f

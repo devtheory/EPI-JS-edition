@@ -24,7 +24,7 @@
 - [ ] 8.4: Normalize pathnames
 - [x] 9.1: Test if a binary tree is height balanced
 - [x] 9.2: Test if a binary tree is symmetric
-- [ ] 9.3: Compute the lowest common ancestor in a binary tree
+- [x] 9.3: Compute the lowest common ancestor in a binary tree
 - [ ] 9.4: Compute the LCA when nodes have parent pointers
 - [ ] 10.1: Merge sorted files
 
@@ -51,7 +51,7 @@
 ## January 31
 
 - [ ] 13.4: Smallest nonconstructible value
-- [ ] 14.1: Test if a binary tree satisfies the BST property
+- [x] 14.1: Test if a binary tree satisfies the BST property
 - [ ] 14.2: Find the first key greater than a given value in a BST
 - [ ] 14.3: Find the k largest elements in a BST
 - [ ] 14.4: Compute the LCA in a BST

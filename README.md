@@ -53,8 +53,8 @@
 - [ ] 13.4: Smallest nonconstructible value
 - [x] 14.1: Test if a binary tree satisfies the BST property
 - [x] 14.2: Find the first key greater than a given value in a BST
-- [ ] 14.3: Find the k largest elements in a BST
-- [ ] 14.4: Compute the LCA in a BST
+- [x] 14.3: Find the k largest elements in a BST
+- [x] 14.4: Compute the LCA in a BST
 - [ ] 18.1: Search a maze
 - [ ] 18.2: Paint a boolean matrix
 

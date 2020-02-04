@@ -147,8 +147,22 @@ describe("binary search trees", () => {
 
     Patterns:
 
-    Complexity: Time: O(), Space: O()
+    Complexity: Time: O(h), Space: O(1)
     */
+
+    var lowestCommonAncestor = function(root, p, q) {
+      if(!root || !p || !q) return null;
+
+      let current = root;
+
+      while(current) {
+        if(p.val < current.val && q.val < current.val) current = current.left;
+        else if(p.val > current.val && q.val > current.val) current = current.right;
+        else return current;
+      }
+
+      return current;
+    };
     it("", () => {
       expect()
     })

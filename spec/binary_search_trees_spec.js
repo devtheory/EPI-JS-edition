@@ -60,12 +60,45 @@ describe("binary search trees", () => {
     /*
     Problem:
 
-    Solution:
+    Solution: BST property helps us determine some cases easily. For example, if p
+    has a right subtree, then the next value greater than p would the be right subtree's
+    leftmost node. Otherwise, p is either a left child or right child of some node.
+    We traverse from the root while discarding left or right subtree depending on
+    how p compares to the current node, adding each root visited to a stack.
+    When we arrive at p, checking if the top's left subtree matches p would tell us
+    that the current root would be the thing to return. If it's a right child, then we
+    proceed to dump the stack until we find a value larger than p and return that.
 
-    Patterns:
+    Patterns: Inorder traversal iteratively.
 
-    Complexity: Time: O(), Space: O()
+    Complexity: Time: O(h), Space: O(h)
     */
+    const inorderSuccessor = (root, p) => {
+      if(!root) return root;
+
+      if(p.right){
+        let current = p.right;
+        while(current.left) current = current.left;
+        return current;
+      }
+
+      let stack = [];
+
+      while(root != p){
+        stack.push(root);
+        p.val < root.val ? (root = root.left) : (root = root.right);
+      }
+
+      let top = stack.pop();
+      if(top && top.left == root) return top;
+
+      while(stack.length != 0){
+        const top = stack.pop();
+        if(top.val > p.val) return top;
+      }
+      return null;
+    }
+
     it("", () => {
       expect()
     })

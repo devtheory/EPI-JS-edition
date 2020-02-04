@@ -112,8 +112,28 @@ describe("binary search trees", () => {
 
     Patterns:
 
-    Complexity: Time: O(), Space: O()
+    Complexity:
+    Time: O(h+k) because the program descendes the recursion tree at most h times more than it ascends for k
+    Space: O(h+k) to store result
     */
+    const getKLargestFromBST = (root, k) => {
+      if(!root) return root;
+
+      let res = [];
+
+      getKLargestFromBSTHelper(root, k, res);
+
+      return res;
+    }
+
+    const getKLargestFromBSTHelper = (root, k, res) => {
+      if(!root || res.length == k) return res;
+
+      getKLargestFromBSTHelper(root.right, k, res);
+      if(res.length < k) res.push(root.data);
+      else return res;
+      getKLargestFromBSTHelper(root.left, k, res);
+    }
     it("", () => {
       expect()
     })
